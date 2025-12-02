@@ -24,3 +24,11 @@ GOOGLE_CLIENT_ID = "505000584820-s2veap633g8atdv0fkme50i3l3nkos4l.apps.googleuse
 # Static assets
 [assets]
 directory = "./public"
+
+# logs
+[observability]
+[observability.logs]
+enabled = false
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
