@@ -67,53 +67,6 @@ async function getCurrentUser(request, env) {
   return user;
 }
 
-// HTML 파일 서빙 (SPA 라우팅 지원)
-async function serveStaticFile(request, env, path) {
-  // Cloudflare Workers Sites를 사용하지 않는 경우를 위한 대체 구현
-  // 실제로는 wrangler.toml의 [site] 설정으로 정적 파일 서빙
-  
-  // SPA 라우팅: /land/* 경로도 index.html로
-  if (path.startsWith('/land/') || path === '/land') {
-    path = '/index.html';
-  }
-  
-  // 기본 경로
-  if (path === '/' || path === '') {
-    path = '/index.html';
-  }
-  
-  // 정적 파일 요청은 __STATIC_CONTENT에서 가져옴
-  try {
-    // Workers Sites 사용 시
-    if (env.__STATIC_CONTENT) {
-      const asset = await env.__STATIC_CONTENT.get(path.slice(1));
-      if (asset) {
-        const contentType = getContentType(path);
-        return new Response(asset, {
-          headers: { 'Content-Type': contentType }
-        });
-      }
-    }
-  } catch (e) {
-    // 에러 무시
-  }
-  
-  return null;
-}
-
-// Content-Type 결정
-function getContentType(path) {
-  if (path.endsWith('.html')) return 'text/html; charset=utf-8';
-  if (path.endsWith('.css')) return 'text/css; charset=utf-8';
-  if (path.endsWith('.js')) return 'application/javascript; charset=utf-8';
-  if (path.endsWith('.json')) return 'application/json';
-  if (path.endsWith('.png')) return 'image/png';
-  if (path.endsWith('.jpg') || path.endsWith('.jpeg')) return 'image/jpeg';
-  if (path.endsWith('.svg')) return 'image/svg+xml';
-  if (path.endsWith('.ico')) return 'image/x-icon';
-  return 'text/plain';
-}
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -449,50 +402,9 @@ export default {
       }
     }
     
-    // 정적 파일 서빙 시도
-    const staticResponse = await serveStaticFile(request, env, path);
-    if (staticResponse) {
-      return staticResponse;
-    }
-    
-    // SPA 라우팅: 모든 경로에서 index.html 반환
-    // Workers Sites가 설정되어 있으면 자동으로 처리됨
-    // 여기서는 index.html을 직접 서빙 시도
-    if (!path.includes('.')) {
-      // Workers Sites에서 index.html 가져오기 시도
-      try {
-        if (env.__STATIC_CONTENT) {
-          const indexHtml = await env.__STATIC_CONTENT.get('index.html');
-          if (indexHtml) {
-            return new Response(indexHtml, {
-              headers: { 'Content-Type': 'text/html; charset=utf-8' }
-            });
-          }
-        }
-      } catch (e) {
-        // 에러 무시
-      }
-      
-      // fallback: 리다이렉트 없이 에러 메시지 표시
-      return new Response(`
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Giftree</title>
-</head>
-<body>
-  <h1>페이지를 불러올 수 없습니다</h1>
-  <p>Workers Sites 설정을 확인해주세요.</p>
-  <p><a href="/">홈으로 돌아가기</a></p>
-</body>
-</html>
-      `, {
-        status: 500,
-        headers: { 'Content-Type': 'text/html; charset=utf-8' }
-      });
-    }
-    
+    // 정적 파일은 [assets] 설정에서 자동 처리됨
+    // SPA 라우팅도 not_found_handling = "single-page-application" 설정으로 자동 처리
+    // 여기까지 도달하면 404 반환 (API가 아닌 다른 요청)
     return new Response('Not found', { status: 404 });
   }
 };
