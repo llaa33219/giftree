@@ -402,9 +402,8 @@ export default {
       }
     }
     
-    // 정적 파일은 [assets] 설정에서 자동 처리됨
-    // SPA 라우팅도 not_found_handling = "single-page-application" 설정으로 자동 처리
-    // 여기까지 도달하면 404 반환 (API가 아닌 다른 요청)
-    return new Response('Not found', { status: 404 });
+    // API가 아닌 요청은 정적 파일로 처리
+    // run_worker_first = true 이므로 env.ASSETS.fetch()로 정적 파일 반환
+    return env.ASSETS.fetch(request);
   }
 };
