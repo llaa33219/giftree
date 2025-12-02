@@ -1,5 +1,5 @@
 {
-  "name": "gift-but-tree",
+  "name": "giftree",
   "version": "1.0.0",
   "description": "Giftree - A tree gifting service",
   "main": "src/worker.js",

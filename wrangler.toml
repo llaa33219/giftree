@@ -1,4 +1,4 @@
-name = "gift-but-tree"
+name = "giftree"
 main = "src/worker.js"
 compatibility_date = "2025-12-01"
 routes = [
