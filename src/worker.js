@@ -402,8 +402,13 @@ export default {
       }
     }
     
-    // API가 아닌 요청은 Assets에서 처리 (not_found_handling = "single-page-application")
-    // Worker는 API만 처리하고 나머지는 fetch 이벤트가 발생하지 않음
+    // API가 아닌 요청은 정적 파일로 처리
+    // run_worker_first = true 이므로 env.ASSETS.fetch()로 정적 파일 반환
+    // not_found_handling = "single-page-application" 설정으로 SPA 라우팅 자동 처리
+    if (env.ASSETS) {
+      return env.ASSETS.fetch(request);
+    }
+    
     return new Response('Not found', { status: 404 });
   }
 };
