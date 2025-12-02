@@ -457,24 +457,39 @@ export default {
     
     // SPA 라우팅: 모든 경로에서 index.html 반환
     // Workers Sites가 설정되어 있으면 자동으로 처리됨
-    // 여기서는 fallback HTML 반환
+    // 여기서는 index.html을 직접 서빙 시도
     if (!path.includes('.')) {
-      // index.html을 요청하도록 리다이렉트하거나 직접 반환
-      // Workers Sites 사용 시 이 부분은 실행되지 않음
+      // Workers Sites에서 index.html 가져오기 시도
+      try {
+        if (env.__STATIC_CONTENT) {
+          const indexHtml = await env.__STATIC_CONTENT.get('index.html');
+          if (indexHtml) {
+            return new Response(indexHtml, {
+              headers: { 'Content-Type': 'text/html; charset=utf-8' }
+            });
+          }
+        }
+      } catch (e) {
+        // 에러 무시
+      }
+      
+      // fallback: 리다이렉트 없이 에러 메시지 표시
       return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=/">
-  <title>Redirecting...</title>
+  <title>Giftree</title>
 </head>
 <body>
-  <p>Redirecting to <a href="/">home</a>...</p>
+  <h1>페이지를 불러올 수 없습니다</h1>
+  <p>Workers Sites 설정을 확인해주세요.</p>
+  <p><a href="/">홈으로 돌아가기</a></p>
 </body>
 </html>
       `, {
-        headers: { 'Content-Type': 'text/html' }
+        status: 500,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
       });
     }
     
