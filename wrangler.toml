@@ -1,0 +1,26 @@
+name = "gift-but-tree"
+main = "src/worker.js"
+compatibility_date = "2025-12-01"
+routes = [
+  { pattern = "giftree.bloupla.net", custom_domain = true, zone_name = "bloupla.net" }
+]
+
+# KV Namespaces for user data and trees
+[[kv_namespaces]]
+binding = "USERS"
+id = "f6303d75508a4e13b7ddcae91996f878"
+
+[[kv_namespaces]]
+binding = "LANDS"
+id = "9bde19ba15db495da550261a8895a9ea"
+
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "bb6863cd22b549f0af55a6616f093ba3"
+
+[vars]
+GOOGLE_CLIENT_ID = "505000584820-s2veap633g8atdv0fkme50i3l3nkos4l.apps.googleusercontent.com"
+
+# Static assets
+[assets]
+directory = "./public"

@@ -1,0 +1,525 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 하늘 */
+#sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
+  transition: background 0.5s ease;
+}
+
+/* 헤더 */
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#share-banner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #2d5a27;
+  font-weight: 500;
+}
+
+#share-banner span {
+  font-size: 14px;
+}
+
+#copy-link-btn {
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+#copy-link-btn:hover {
+  background: #388E3C;
+  transform: scale(1.05);
+}
+
+#user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+#user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #4CAF50;
+}
+
+#user-avatar[src=""],
+#user-avatar:not([src]) {
+  display: none;
+}
+
+#user-name {
+  font-weight: 500;
+  color: #333;
+}
+
+#settings-btn, #logout-btn {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#settings-btn:hover, #logout-btn:hover {
+  background: #f5f5f5;
+}
+
+/* 땅 영역 */
+#land-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#land {
+  position: relative;
+  height: 100%;
+  min-width: 100%;
+  background: linear-gradient(to bottom, #8B4513 0%, #654321 50%, #3d2817 100%);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 20px;
+  transition: background 0.5s ease;
+}
+
+#trees-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  padding: 0 50px;
+  height: calc(100% - 20px);
+}
+
+/* 나무 스타일 */
+.tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.tree:hover {
+  transform: scale(1.05);
+}
+
+.tree-image {
+  width: 120px;
+  height: 150px;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.tree-sign {
+  position: relative;
+  margin-top: -10px;
+  padding: 8px 12px;
+  background: #DEB887;
+  border: 3px solid #8B4513;
+  border-radius: 5px;
+  font-size: 11px;
+  color: #3d2817;
+  text-align: center;
+  max-width: 140px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tree-sign::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 25px;
+  background: #8B4513;
+}
+
+.sign-owner {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.sign-date {
+  font-size: 10px;
+  color: #666;
+}
+
+/* 로그인 화면 */
+#login-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.login-content {
+  background: white;
+  padding: 50px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.login-content h1 {
+  font-size: 28px;
+  color: #2d5a27;
+  margin-bottom: 15px;
+}
+
+.login-content p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+#google-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+#google-login-btn:hover {
+  border-color: #4285F4;
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+}
+
+#google-login-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* 나무 심기 버튼 */
+#plant-tree-screen {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+}
+
+.big-btn {
+  padding: 18px 40px;
+  font-size: 20px;
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  transition: all 0.3s ease;
+}
+
+.big-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5);
+}
+
+/* 모달 공통 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 300;
+}
+
+.modal-content {
+  background: white;
+  padding: 35px 40px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  color: #2d5a27;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-group input[type="file"] {
+  font-size: 14px;
+}
+
+#image-preview, #profile-preview {
+  margin-top: 10px;
+}
+
+#image-preview img, #profile-preview img {
+  max-width: 200px;
+  max-height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.modal-buttons button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons button:first-child {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  transform: scale(1.05);
+}
+
+.modal-buttons button.secondary {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.modal-buttons button.secondary:hover {
+  background: #e0e0e0;
+}
+
+/* 팻말 모달 */
+#sign-info {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#sign-content {
+  padding: 20px;
+  background: #FFF8DC;
+  border-radius: 10px;
+  border: 2px solid #DEB887;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+#sign-image-view img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+#close-sign-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 40px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#close-sign-btn:hover {
+  background: #e0e0e0;
+}
+
+/* 토스트 메시지 */
+#toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-radius: 30px;
+  font-size: 14px;
+  z-index: 400;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 숨김 클래스 */
+.hidden {
+  display: none !important;
+}
+
+/* 스크롤바 스타일 */
+#land-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+#land-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#land-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+#land-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  #header {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #share-banner {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .login-content {
+    padding: 30px 25px;
+  }
+
+  .login-content h1 {
+    font-size: 22px;
+  }
+
+  .tree-image {
+    width: 80px;
+    height: 100px;
+  }
+
+  .big-btn {
+    padding: 15px 30px;
+    font-size: 16px;
+  }
+
+  .modal-content {
+    padding: 25px 20px;
+  }
+}

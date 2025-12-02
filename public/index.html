@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giftree</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 하늘 영역 -->
+    <div id="sky"></div>
+    
+    <!-- 상단 바 -->
+    <header id="header">
+      <div id="share-banner" class="hidden">
+        <span>링크를 공유하여 나무를 받아보세요!</span>
+        <button id="copy-link-btn">링크 복사</button>
+      </div>
+      <div id="user-menu" class="hidden">
+        <img id="user-avatar" src="" alt="프로필">
+        <span id="user-name"></span>
+        <button id="settings-btn">⚙️</button>
+        <button id="logout-btn">로그아웃</button>
+      </div>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main id="land-container">
+      <div id="land">
+        <div id="trees-container"></div>
+      </div>
+    </main>
+
+    <!-- 로그인 화면 (비로그인 시) -->
+    <div id="login-screen" class="hidden">
+      <div class="login-content">
+        <h1>🎄 Giftree 🌳</h1>
+        <p>나만의 토지에 나무를 받아보세요!</p>
+        <button id="google-login-btn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+          Google로 로그인
+        </button>
+      </div>
+    </div>
+
+    <!-- 나무 심기 화면 (다른 사람 토지 방문 시) -->
+    <div id="plant-tree-screen" class="hidden">
+      <button id="plant-tree-btn" class="big-btn">🌱 나무 심어주기</button>
+    </div>
+
+    <!-- 나무 심기 모달 -->
+    <div id="plant-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>나무 심어주기</h2>
+        <div class="form-group">
+          <label for="sign-message">팻말에 적을 말:</label>
+          <textarea id="sign-message" placeholder="마음을 담은 메시지를 적어주세요..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="sign-image">이미지 첨부 (선택):</label>
+          <input type="file" id="sign-image" accept="image/*">
+          <div id="image-preview"></div>
+        </div>
+        <div class="modal-buttons">
+          <button id="confirm-plant-btn">나무 심기</button>
+          <button id="cancel-plant-btn" class="secondary">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 팻말 보기 모달 -->
+    <div id="sign-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>팻말</h2>
+        <p id="sign-info"></p>
+        <div id="sign-content"></div>
+        <div id="sign-image-view"></div>
+        <button id="close-sign-btn">닫기</button>
+      </div>
+    </div>
+
+    <!-- 설정 모달 -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>설정</h2>
+        <div class="form-group">
+          <label for="nickname-input">닉네임:</label>
+          <input type="text" id="nickname-input" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label for="profile-image">프로필 이미지:</label>
+          <input type="file" id="profile-image" accept="image/*">
+          <div id="profile-preview"></div>
+        </div>
+        <div class="form-group">
+          <label for="sky-color">하늘 색상:</label>
+          <input type="color" id="sky-color" value="#87CEEB">
+        </div>
+        <div class="form-group">
+          <label for="land-color">땅 색상:</label>
+          <input type="color" id="land-color" value="#8B4513">
+        </div>
+        <div class="modal-buttons">
+          <button id="save-settings-btn">저장</button>
+          <button id="cancel-settings-btn" class="secondary">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 토스트 메시지 -->
+    <div id="toast" class="hidden"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

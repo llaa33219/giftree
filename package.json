@@ -1,0 +1,17 @@
+{
+  "name": "gift-but-tree",
+  "version": "1.0.0",
+  "description": "Giftree - A tree gifting service",
+  "main": "src/worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "keywords": ["cloudflare-workers", "tree", "gift"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
