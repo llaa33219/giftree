@@ -402,30 +402,8 @@ export default {
       }
     }
     
-    // API가 아닌 요청은 정적 파일로 처리
-    // run_worker_first = true 이므로 env.ASSETS.fetch()로 정적 파일 반환
-    if (env.ASSETS) {
-      try {
-        const assetResponse = await env.ASSETS.fetch(request);
-        
-        // SPA 라우팅: 404인 경우 index.html 반환
-        if (!assetResponse.ok && !path.includes('.')) {
-          return env.ASSETS.fetch(new Request(new URL('/index.html', request.url), request));
-        }
-        
-        return assetResponse;
-      } catch (e) {
-        console.error('Asset fetch error:', e);
-        // 에러 시 index.html 시도
-        try {
-          return env.ASSETS.fetch(new Request(new URL('/index.html', request.url), request));
-        } catch (e2) {
-          return new Response('Not found', { status: 404 });
-        }
-      }
-    }
-    
-    // ASSETS가 없으면 404 반환
+    // API가 아닌 요청은 Assets에서 처리 (not_found_handling = "single-page-application")
+    // Worker는 API만 처리하고 나머지는 fetch 이벤트가 발생하지 않음
     return new Response('Not found', { status: 404 });
   }
 };
