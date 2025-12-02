@@ -23,6 +23,7 @@ GOOGLE_CLIENT_ID = "505000584820-s2veap633g8atdv0fkme50i3l3nkos4l.apps.googleuse
 
 # Static assets
 [assets]
+binding = "ASSETS"
 directory = "./public"
 html_handling = "auto-trailing-slash"
 not_found_handling = "single-page-application"
