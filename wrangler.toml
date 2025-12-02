@@ -22,15 +22,12 @@ id = "bb6863cd22b549f0af55a6616f093ba3"
 GOOGLE_CLIENT_ID = "505000584820-s2veap633g8atdv0fkme50i3l3nkos4l.apps.googleusercontent.com"
 
 # Static assets
-[[assets]]
-binding = "ASSETS"
+[assets]
 directory = "./public"
+binding = "ASSETS"
 run_worker_first = true
 
 # logs
 [observability]
-[observability.logs]
 enabled = true
 head_sampling_rate = 1
-invocation_logs = true
-persist = true
