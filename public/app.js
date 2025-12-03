@@ -9,7 +9,9 @@
     landOwner: null,
     trees: [],
     isOwnLand: false,
-    viewingLandId: null
+    viewingLandId: null,
+    currentTreeIndex: 0,
+    treesPerPage: 1
   };
 
   // 계절별 나무 종류
@@ -110,9 +112,16 @@
   }
 
   // 나무 렌더링
-  function renderTrees() {
+  function renderTrees(direction) {
     const container = document.getElementById('trees-container');
     container.innerHTML = '';
+
+    // 애니메이션 적용
+    if (direction) {
+      container.classList.remove('slide-left', 'slide-right');
+      void container.offsetWidth; // 리플로우 강제
+      container.classList.add(direction === 'left' ? 'slide-right' : 'slide-left');
+    }
 
     if (state.trees.length === 0) {
       // 기본 나무 하나 표시 (계절에 맞는)
@@ -128,21 +137,51 @@
       });
       container.appendChild(treeEl);
     } else {
-      // 나무들 표시 (오래된 순서대로, 최신이 오른쪽)
-      state.trees.forEach(tree => {
-        const treeEl = createTreeElement(tree);
+      // 현재 페이지의 나무들만 표시
+      const startIndex = state.currentTreeIndex;
+      const endIndex = Math.min(startIndex + state.treesPerPage, state.trees.length);
+      
+      for (let i = startIndex; i < endIndex; i++) {
+        const treeEl = createTreeElement(state.trees[i]);
         container.appendChild(treeEl);
-      });
+      }
     }
 
-    // 최신 나무(오른쪽)로 스크롤
-    const landContainer = document.getElementById('land-container');
-    landContainer.scrollLeft = landContainer.scrollWidth;
+    // 네비게이션 버튼 업데이트
+    updateNavButtons();
+  }
 
-    // 토지 너비 조정
-    const land = document.getElementById('land');
-    const minWidth = Math.max(window.innerWidth, state.trees.length * 180 + 100);
-    land.style.width = minWidth + 'px';
+  // 네비게이션 버튼 업데이트
+  function updateNavButtons() {
+    const prevBtn = document.getElementById('nav-prev');
+    const nextBtn = document.getElementById('nav-next');
+    
+    if (state.trees.length <= state.treesPerPage) {
+      prevBtn.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+    } else {
+      prevBtn.classList.toggle('hidden', state.currentTreeIndex === 0);
+      nextBtn.classList.toggle('hidden', state.currentTreeIndex + state.treesPerPage >= state.trees.length);
+    }
+  }
+
+  // 이전 나무로 이동
+  function goToPrevTree() {
+    if (state.currentTreeIndex > 0) {
+      state.currentTreeIndex = Math.max(0, state.currentTreeIndex - state.treesPerPage);
+      renderTrees('left');
+    }
+  }
+
+  // 다음 나무로 이동
+  function goToNextTree() {
+    if (state.currentTreeIndex + state.treesPerPage < state.trees.length) {
+      state.currentTreeIndex = Math.min(
+        state.trees.length - state.treesPerPage,
+        state.currentTreeIndex + state.treesPerPage
+      );
+      renderTrees('right');
+    }
   }
 
   // 나무 요소 생성
@@ -316,6 +355,8 @@
       state.trees = data.trees || [];
       state.viewingLandId = landId;
       state.isOwnLand = state.currentUser && state.currentUser.id === landId;
+      state.treesPerPage = data.owner.settings?.treesPerPage || 1;
+      state.currentTreeIndex = Math.max(0, state.trees.length - state.treesPerPage);
 
       applyLandTheme(data.owner.settings);
       renderTrees();
@@ -437,6 +478,7 @@
       document.getElementById('nickname-input').value = state.currentUser.nickname || '';
       document.getElementById('sky-color').value = state.currentUser.settings?.skyColor || '#87CEEB';
       document.getElementById('land-color').value = state.currentUser.settings?.landColor || '#8B4513';
+      document.getElementById('trees-per-page').value = state.currentUser.settings?.treesPerPage || 1;
       document.getElementById('profile-preview').innerHTML = '';
       modal.classList.remove('hidden');
     });
@@ -446,6 +488,7 @@
       const nickname = document.getElementById('nickname-input').value.trim();
       const skyColor = document.getElementById('sky-color').value;
       const landColor = document.getElementById('land-color').value;
+      const treesPerPage = parseInt(document.getElementById('trees-per-page').value, 10);
       const profileFile = document.getElementById('profile-image').files[0];
 
       let profileImage = state.currentUser.profileImage;
@@ -458,9 +501,14 @@
         profileImage: profileImage,
         settings: {
           skyColor: skyColor,
-          landColor: landColor
+          landColor: landColor,
+          treesPerPage: treesPerPage
         }
       });
+
+      state.treesPerPage = treesPerPage;
+      state.currentTreeIndex = 0;
+      renderTrees();
 
       document.getElementById('settings-modal').classList.add('hidden');
     });
@@ -540,6 +588,19 @@
           modal.classList.add('hidden');
         }
       });
+    });
+
+    // 나무 네비게이션
+    document.getElementById('nav-prev').addEventListener('click', goToPrevTree);
+    document.getElementById('nav-next').addEventListener('click', goToNextTree);
+
+    // 키보드 네비게이션
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevTree();
+      } else if (e.key === 'ArrowRight') {
+        goToNextTree();
+      }
     });
   }
 

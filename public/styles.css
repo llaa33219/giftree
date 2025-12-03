@@ -135,11 +135,82 @@ html, body {
 #trees-container {
   position: absolute;
   bottom: calc(100% - 75px);
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   gap: 60px;
   padding: 0 50px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#trees-container.slide-left {
+  animation: slideLeft 0.4s ease;
+}
+
+#trees-container.slide-right {
+  animation: slideRight 0.4s ease;
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(-50% + 100px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(-50% - 100px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+/* 나무 네비게이션 버튼 */
+.tree-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tree-nav-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tree-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+#nav-prev {
+  left: 30px;
+}
+
+#nav-next {
+  right: 30px;
 }
 
 /* 나무 스타일 */
@@ -360,6 +431,22 @@ html, body {
 
 .form-group input[type="file"] {
   font-size: 14px;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #4CAF50;
 }
 
 #image-preview, #profile-preview {

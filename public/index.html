@@ -29,7 +29,9 @@
     <!-- 메인 컨텐츠 영역 -->
     <main id="land-container">
       <div id="land">
+        <button id="nav-prev" class="tree-nav-btn hidden">❮</button>
         <div id="trees-container"></div>
+        <button id="nav-next" class="tree-nav-btn hidden">❯</button>
       </div>
     </main>
 
@@ -101,6 +103,15 @@
         <div class="form-group">
           <label for="land-color">땅 색상:</label>
           <input type="color" id="land-color" value="#8B4513">
+        </div>
+        <div class="form-group">
+          <label for="trees-per-page">한번에 표시할 나무 개수:</label>
+          <select id="trees-per-page">
+            <option value="1">1개</option>
+            <option value="2">2개</option>
+            <option value="3">3개</option>
+            <option value="4">4개</option>
+          </select>
         </div>
         <div class="modal-buttons">
           <button id="save-settings-btn">저장</button>
