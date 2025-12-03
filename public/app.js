@@ -158,6 +158,8 @@
     iframe.title = tree.type;
     iframe.setAttribute('scrolling', 'no');
     iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allowtransparency', 'true');
+    iframe.style.backgroundColor = 'transparent';
     iframe.onerror = function() {
       // 로드 실패 시 이모지로 대체
       showTreeEmojiFallback(this, tree.type);
