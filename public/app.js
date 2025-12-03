@@ -355,7 +355,8 @@
       state.trees = data.trees || [];
       state.viewingLandId = landId;
       state.isOwnLand = state.currentUser && state.currentUser.id === landId;
-      state.treesPerPage = data.owner.settings?.treesPerPage || 1;
+      // treesPerPage는 현재 로그인한 사용자의 설정 사용 (토지 소유자 설정 아님)
+      state.treesPerPage = state.currentUser?.settings?.treesPerPage || 1;
       state.currentTreeIndex = Math.max(0, state.trees.length - state.treesPerPage);
 
       applyLandTheme(data.owner.settings);
