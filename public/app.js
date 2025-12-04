@@ -331,6 +331,7 @@
 
       document.getElementById('user-avatar').src = state.currentUser.profileImage || '';
       document.getElementById('user-name').textContent = state.currentUser.nickname || state.currentUser.name;
+      document.getElementById('trees-per-page-header').value = state.currentUser.settings?.treesPerPage || 1;
     } else if (landId && !state.isOwnLand) {
       // 다른 사람의 토지
       loginScreen.classList.add('hidden');
@@ -479,9 +480,22 @@
       document.getElementById('nickname-input').value = state.currentUser.nickname || '';
       document.getElementById('sky-color').value = state.currentUser.settings?.skyColor || '#87CEEB';
       document.getElementById('land-color').value = state.currentUser.settings?.landColor || '#8B4513';
-      document.getElementById('trees-per-page').value = state.currentUser.settings?.treesPerPage || 1;
       document.getElementById('profile-preview').innerHTML = '';
       modal.classList.remove('hidden');
+    });
+
+    // 상단 바 나무 개수 변경
+    document.getElementById('trees-per-page-header').addEventListener('change', async (e) => {
+      const treesPerPage = parseInt(e.target.value, 10);
+      await saveSettings({
+        settings: {
+          ...state.currentUser.settings,
+          treesPerPage: treesPerPage
+        }
+      });
+      state.treesPerPage = treesPerPage;
+      state.currentTreeIndex = Math.max(0, state.trees.length - state.treesPerPage);
+      renderTrees();
     });
 
     // 설정 저장
@@ -489,7 +503,6 @@
       const nickname = document.getElementById('nickname-input').value.trim();
       const skyColor = document.getElementById('sky-color').value;
       const landColor = document.getElementById('land-color').value;
-      const treesPerPage = parseInt(document.getElementById('trees-per-page').value, 10);
       const profileFile = document.getElementById('profile-image').files[0];
 
       let profileImage = state.currentUser.profileImage;
@@ -501,15 +514,11 @@
         nickname: nickname,
         profileImage: profileImage,
         settings: {
+          ...state.currentUser.settings,
           skyColor: skyColor,
-          landColor: landColor,
-          treesPerPage: treesPerPage
+          landColor: landColor
         }
       });
-
-      state.treesPerPage = treesPerPage;
-      state.currentTreeIndex = 0;
-      renderTrees();
 
       document.getElementById('settings-modal').classList.add('hidden');
     });

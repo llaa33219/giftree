@@ -97,6 +97,35 @@ html, body {
   color: #333;
 }
 
+#trees-per-page-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#trees-per-page-wrapper label {
+  font-size: 16px;
+}
+
+#trees-per-page-header {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 13px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#trees-per-page-header:hover {
+  border-color: #4CAF50;
+}
+
+#trees-per-page-header:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
 #settings-btn, #logout-btn {
   padding: 6px 12px;
   background: transparent;
