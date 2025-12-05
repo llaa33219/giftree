@@ -304,14 +304,25 @@
     return lightenColor(color, -percent);
   }
 
+  // 나무 개수 업데이트
+  function updateTreeCount() {
+    const treeCountNumber = document.getElementById('tree-count-number');
+    treeCountNumber.textContent = state.trees.length;
+  }
+
   // UI 업데이트
   function updateUI() {
     const loginScreen = document.getElementById('login-screen');
     const shareBanner = document.getElementById('share-banner');
     const userMenu = document.getElementById('user-menu');
     const plantScreen = document.getElementById('plant-tree-screen');
+    const headerColors = document.getElementById('header-colors');
+    const treeCountDisplay = document.getElementById('tree-count-display');
 
     const landId = getLandIdFromUrl();
+
+    // 나무 개수 업데이트
+    updateTreeCount();
 
     if (!landId && !state.currentUser) {
       // 메인 페이지, 비로그인
@@ -319,6 +330,8 @@
       shareBanner.classList.add('hidden');
       userMenu.classList.add('hidden');
       plantScreen.classList.add('hidden');
+      headerColors.classList.add('hidden');
+      treeCountDisplay.classList.add('hidden');
     } else if (!landId && state.currentUser) {
       // 메인 페이지, 로그인됨 -> 자신의 토지로 리다이렉트
       window.location.href = '/land/' + state.currentUser.id;
@@ -328,15 +341,23 @@
       shareBanner.classList.remove('hidden');
       userMenu.classList.remove('hidden');
       plantScreen.classList.add('hidden');
+      headerColors.classList.remove('hidden');
+      treeCountDisplay.classList.remove('hidden');
 
       document.getElementById('user-avatar').src = state.currentUser.profileImage || '';
       document.getElementById('user-name').textContent = state.currentUser.nickname || state.currentUser.name;
       document.getElementById('trees-per-page-header').value = state.currentUser.settings?.treesPerPage || 1;
+      
+      // 색상 선택기 값 설정
+      document.getElementById('header-sky-color').value = state.currentUser.settings?.skyColor || '#87CEEB';
+      document.getElementById('header-land-color').value = state.currentUser.settings?.landColor || '#8B4513';
     } else if (landId && !state.isOwnLand) {
       // 다른 사람의 토지
       loginScreen.classList.add('hidden');
       shareBanner.classList.add('hidden');
       plantScreen.classList.remove('hidden');
+      headerColors.classList.add('hidden');
+      treeCountDisplay.classList.remove('hidden');
 
       if (state.currentUser) {
         userMenu.classList.remove('hidden');
@@ -478,10 +499,32 @@
     document.getElementById('settings-btn').addEventListener('click', () => {
       const modal = document.getElementById('settings-modal');
       document.getElementById('nickname-input').value = state.currentUser.nickname || '';
-      document.getElementById('sky-color').value = state.currentUser.settings?.skyColor || '#87CEEB';
-      document.getElementById('land-color').value = state.currentUser.settings?.landColor || '#8B4513';
       document.getElementById('profile-preview').innerHTML = '';
       modal.classList.remove('hidden');
+    });
+
+    // 상단 바 하늘 색상 변경
+    document.getElementById('header-sky-color').addEventListener('change', async (e) => {
+      const skyColor = e.target.value;
+      applyLandTheme({ skyColor, landColor: state.currentUser.settings?.landColor });
+      await saveSettings({
+        settings: {
+          ...state.currentUser.settings,
+          skyColor: skyColor
+        }
+      });
+    });
+
+    // 상단 바 땅 색상 변경
+    document.getElementById('header-land-color').addEventListener('change', async (e) => {
+      const landColor = e.target.value;
+      applyLandTheme({ skyColor: state.currentUser.settings?.skyColor, landColor });
+      await saveSettings({
+        settings: {
+          ...state.currentUser.settings,
+          landColor: landColor
+        }
+      });
     });
 
     // 상단 바 나무 개수 변경
@@ -501,8 +544,6 @@
     // 설정 저장
     document.getElementById('save-settings-btn').addEventListener('click', async () => {
       const nickname = document.getElementById('nickname-input').value.trim();
-      const skyColor = document.getElementById('sky-color').value;
-      const landColor = document.getElementById('land-color').value;
       const profileFile = document.getElementById('profile-image').files[0];
 
       let profileImage = state.currentUser.profileImage;
@@ -514,9 +555,7 @@
         nickname: nickname,
         profileImage: profileImage,
         settings: {
-          ...state.currentUser.settings,
-          skyColor: skyColor,
-          landColor: landColor
+          ...state.currentUser.settings
         }
       });
 

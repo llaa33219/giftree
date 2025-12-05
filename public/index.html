@@ -14,9 +14,23 @@
     
     <!-- 상단 바 -->
     <header id="header">
+      <div id="tree-count-display">
+        <span id="tree-count-icon">🌳</span>
+        <span id="tree-count-number">0</span>그루
+      </div>
       <div id="share-banner" class="hidden">
         <span>링크를 공유하여 나무를 받아보세요!</span>
         <button id="copy-link-btn">링크 복사</button>
+      </div>
+      <div id="header-colors" class="hidden">
+        <div class="header-color-picker">
+          <label for="header-sky-color">🌤️</label>
+          <input type="color" id="header-sky-color" value="#87CEEB" title="하늘 색상">
+        </div>
+        <div class="header-color-picker">
+          <label for="header-land-color">🌍</label>
+          <input type="color" id="header-land-color" value="#8B4513" title="땅 색상">
+        </div>
       </div>
       <div id="user-menu" class="hidden">
         <img id="user-avatar" src="" alt="프로필">
@@ -105,15 +119,6 @@
           <input type="file" id="profile-image" accept="image/*">
           <div id="profile-preview"></div>
         </div>
-        <div class="form-group">
-          <label for="sky-color">하늘 색상:</label>
-          <input type="color" id="sky-color" value="#87CEEB">
-        </div>
-        <div class="form-group">
-          <label for="land-color">땅 색상:</label>
-          <input type="color" id="land-color" value="#8B4513">
-        </div>
-        
         <div class="modal-buttons">
           <button id="save-settings-btn">저장</button>
           <button id="cancel-settings-btn" class="secondary">취소</button>
