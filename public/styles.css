@@ -627,8 +627,11 @@ html, body {
   box-shadow: none;
 }
 
-.plant-tree-btn {
+#plant-tree-btn {
   background: #00a100;
+}
+#plant-tree-btn:hover {
+  background: #006200;
 }
 
 /* 모달 공통 */
