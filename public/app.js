@@ -313,12 +313,15 @@
   // UI 업데이트
   function updateUI() {
     const loginScreen = document.getElementById('login-screen');
-    const headerLeft = document.getElementById('header-left');
-    const headerRight = document.getElementById('header-right');
     const plantScreen = document.getElementById('plant-tree-screen');
     const treeCountDisplay = document.getElementById('tree-count-display');
     const landOwnerDisplay = document.getElementById('land-owner-display');
     const landOwnerName = document.getElementById('land-owner-name');
+    const copyLinkBtn = document.getElementById('copy-link-btn');
+    const headerColors = document.getElementById('header-colors');
+    const treesPerPageWrapper = document.getElementById('trees-per-page-wrapper');
+    const userAccount = document.getElementById('user-account');
+    const settingsBtn = document.getElementById('settings-btn');
 
     const landId = getLandIdFromUrl();
 
@@ -328,22 +331,28 @@
     if (!landId && !state.currentUser) {
       // 메인 페이지, 비로그인
       loginScreen.classList.remove('hidden');
-      headerLeft.classList.add('hidden');
-      headerRight.classList.add('hidden');
       plantScreen.classList.add('hidden');
       treeCountDisplay.classList.add('hidden');
       landOwnerDisplay.classList.add('hidden');
+      copyLinkBtn.classList.add('hidden');
+      headerColors.classList.add('hidden');
+      treesPerPageWrapper.classList.add('hidden');
+      userAccount.classList.add('hidden');
+      settingsBtn.classList.add('hidden');
     } else if (!landId && state.currentUser) {
       // 메인 페이지, 로그인됨 -> 자신의 토지로 리다이렉트
       window.location.href = '/land/' + state.currentUser.id;
     } else if (landId && state.isOwnLand) {
       // 자신의 토지
       loginScreen.classList.add('hidden');
-      headerLeft.classList.remove('hidden');
-      headerRight.classList.remove('hidden');
       plantScreen.classList.add('hidden');
       treeCountDisplay.classList.remove('hidden');
       landOwnerDisplay.classList.remove('hidden');
+      copyLinkBtn.classList.remove('hidden');
+      headerColors.classList.remove('hidden');
+      treesPerPageWrapper.classList.remove('hidden');
+      userAccount.classList.remove('hidden');
+      settingsBtn.classList.remove('hidden');
 
       // 토지 소유자 이름 표시
       landOwnerName.textContent = state.currentUser.nickname || state.currentUser.name;
@@ -358,10 +367,11 @@
     } else if (landId && !state.isOwnLand) {
       // 다른 사람의 토지
       loginScreen.classList.add('hidden');
-      headerLeft.classList.add('hidden');
       plantScreen.classList.remove('hidden');
       treeCountDisplay.classList.remove('hidden');
       landOwnerDisplay.classList.remove('hidden');
+      copyLinkBtn.classList.add('hidden');
+      headerColors.classList.add('hidden');
 
       // 토지 소유자 이름 표시
       if (state.landOwner) {
@@ -369,11 +379,15 @@
       }
 
       if (state.currentUser) {
-        headerRight.classList.remove('hidden');
+        treesPerPageWrapper.classList.remove('hidden');
+        userAccount.classList.remove('hidden');
+        settingsBtn.classList.remove('hidden');
         document.getElementById('user-avatar').src = state.currentUser.profileImage || '';
         document.getElementById('user-name').textContent = state.currentUser.nickname || state.currentUser.name;
       } else {
-        headerRight.classList.add('hidden');
+        treesPerPageWrapper.classList.add('hidden');
+        userAccount.classList.add('hidden');
+        settingsBtn.classList.add('hidden');
       }
     }
   }
