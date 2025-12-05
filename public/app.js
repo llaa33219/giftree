@@ -313,11 +313,12 @@
   // UI 업데이트
   function updateUI() {
     const loginScreen = document.getElementById('login-screen');
-    const shareBanner = document.getElementById('share-banner');
-    const userMenu = document.getElementById('user-menu');
+    const headerLeft = document.getElementById('header-left');
+    const headerRight = document.getElementById('header-right');
     const plantScreen = document.getElementById('plant-tree-screen');
-    const headerColors = document.getElementById('header-colors');
     const treeCountDisplay = document.getElementById('tree-count-display');
+    const landOwnerDisplay = document.getElementById('land-owner-display');
+    const landOwnerName = document.getElementById('land-owner-name');
 
     const landId = getLandIdFromUrl();
 
@@ -327,22 +328,25 @@
     if (!landId && !state.currentUser) {
       // 메인 페이지, 비로그인
       loginScreen.classList.remove('hidden');
-      shareBanner.classList.add('hidden');
-      userMenu.classList.add('hidden');
+      headerLeft.classList.add('hidden');
+      headerRight.classList.add('hidden');
       plantScreen.classList.add('hidden');
-      headerColors.classList.add('hidden');
       treeCountDisplay.classList.add('hidden');
+      landOwnerDisplay.classList.add('hidden');
     } else if (!landId && state.currentUser) {
       // 메인 페이지, 로그인됨 -> 자신의 토지로 리다이렉트
       window.location.href = '/land/' + state.currentUser.id;
     } else if (landId && state.isOwnLand) {
       // 자신의 토지
       loginScreen.classList.add('hidden');
-      shareBanner.classList.remove('hidden');
-      userMenu.classList.remove('hidden');
+      headerLeft.classList.remove('hidden');
+      headerRight.classList.remove('hidden');
       plantScreen.classList.add('hidden');
-      headerColors.classList.remove('hidden');
       treeCountDisplay.classList.remove('hidden');
+      landOwnerDisplay.classList.remove('hidden');
+
+      // 토지 소유자 이름 표시
+      landOwnerName.textContent = state.currentUser.nickname || state.currentUser.name;
 
       document.getElementById('user-avatar').src = state.currentUser.profileImage || '';
       document.getElementById('user-name').textContent = state.currentUser.nickname || state.currentUser.name;
@@ -354,17 +358,22 @@
     } else if (landId && !state.isOwnLand) {
       // 다른 사람의 토지
       loginScreen.classList.add('hidden');
-      shareBanner.classList.add('hidden');
+      headerLeft.classList.add('hidden');
       plantScreen.classList.remove('hidden');
-      headerColors.classList.add('hidden');
       treeCountDisplay.classList.remove('hidden');
+      landOwnerDisplay.classList.remove('hidden');
+
+      // 토지 소유자 이름 표시
+      if (state.landOwner) {
+        landOwnerName.textContent = state.landOwner.nickname || state.landOwner.name;
+      }
 
       if (state.currentUser) {
-        userMenu.classList.remove('hidden');
+        headerRight.classList.remove('hidden');
         document.getElementById('user-avatar').src = state.currentUser.profileImage || '';
         document.getElementById('user-name').textContent = state.currentUser.nickname || state.currentUser.name;
       } else {
-        userMenu.classList.add('hidden');
+        headerRight.classList.add('hidden');
       }
     }
   }

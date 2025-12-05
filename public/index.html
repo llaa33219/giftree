@@ -14,27 +14,34 @@
     
     <!-- 상단 바 -->
     <header id="header">
-      <div id="tree-count-display">
-        <span id="tree-count-icon">🌳</span>
-        <span id="tree-count-number">0</span>그루
-      </div>
-      <div id="share-banner" class="hidden">
-        <span>링크를 공유하여 나무를 받아보세요!</span>
-        <button id="copy-link-btn">링크 복사</button>
-      </div>
-      <div id="header-colors" class="hidden">
-        <div class="header-color-picker">
-          <label for="header-sky-color">🌤️</label>
-          <input type="color" id="header-sky-color" value="#87CEEB" title="하늘 색상">
-        </div>
-        <div class="header-color-picker">
-          <label for="header-land-color">🌍</label>
-          <input type="color" id="header-land-color" value="#8B4513" title="땅 색상">
+      <!-- 좌측: 링크 복사, 토지 색, 하늘 색 -->
+      <div id="header-left" class="hidden">
+        <button id="copy-link-btn">🔗 링크 복사</button>
+        <div id="header-colors">
+          <div class="header-color-picker">
+            <label for="header-land-color">🌍</label>
+            <input type="color" id="header-land-color" value="#8B4513" title="토지 색상">
+          </div>
+          <div class="header-color-picker">
+            <label for="header-sky-color">🌤️</label>
+            <input type="color" id="header-sky-color" value="#87CEEB" title="하늘 색상">
+          </div>
         </div>
       </div>
-      <div id="user-menu" class="hidden">
-        <img id="user-avatar" src="" alt="프로필">
-        <span id="user-name"></span>
+
+      <!-- 중앙: 토지 소유자 이름, 나무 개수 -->
+      <div id="header-center">
+        <div id="land-owner-display" class="hidden">
+          <span id="land-owner-name"></span>님의 토지입니다.
+        </div>
+        <div id="tree-count-display" class="hidden">
+          <span id="tree-count-icon">🌳</span>
+          <span id="tree-count-number">0</span>그루
+        </div>
+      </div>
+
+      <!-- 우측: 나무 표기 개수, 계정, 설정 -->
+      <div id="header-right" class="hidden">
         <div id="trees-per-page-wrapper">
           <label for="trees-per-page-header">🌲</label>
           <select id="trees-per-page-header">
@@ -44,8 +51,11 @@
             <option value="4">4개</option>
           </select>
         </div>
+        <div id="user-account">
+          <img id="user-avatar" src="" alt="프로필">
+          <span id="user-name"></span>
+        </div>
         <button id="settings-btn">⚙️</button>
-        <button id="logout-btn">로그아웃</button>
       </div>
     </header>
 
@@ -123,6 +133,8 @@
           <button id="save-settings-btn">저장</button>
           <button id="cancel-settings-btn" class="secondary">취소</button>
         </div>
+        <hr class="settings-divider">
+        <button id="logout-btn" class="logout-btn">로그아웃</button>
       </div>
     </div>
 
