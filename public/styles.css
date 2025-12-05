@@ -481,6 +481,9 @@ html, body {
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
+.tree:hover {
+  transform: scale(1.05);
+}
 
 .tree-image {
   width: 600px;
@@ -507,10 +510,6 @@ html, body {
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   transition: transform 0.3s ease;
-}
-
-.tree-sign:hover {
-  transform: scale(1.05) translateX(-50%);
 }
 
 .sign-owner {
