@@ -293,7 +293,8 @@ html, body {
 }
 
 #trees-per-page-wrapper label {
-  font-size: var(--text-body);
+  font-size: 19px;
+  width: 171px;
 }
 
 #trees-per-page-header {
@@ -319,13 +320,14 @@ html, body {
 }
 
 #settings-btn {
-  padding: 10px 16px;
+  padding: 5px 5px;
   background: transparent;
   border: 2px solid var(--gray-300);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--duration-normal) var(--easing);
   font-size: var(--text-body);
+  width: 100px;
 }
 
 #settings-btn:hover {
@@ -480,10 +482,6 @@ html, body {
   flex-shrink: 0;
 }
 
-.tree-sign:hover {
-  transform: scale(1.05);
-}
-
 .tree-image {
   width: 600px;
   height: 750px;
@@ -508,6 +506,11 @@ html, body {
   max-width: 250px;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
+  transition: transform 0.3s ease;
+}
+
+.tree-sign:hover {
+  transform: scale(1.05);
 }
 
 .sign-owner {
@@ -622,6 +625,10 @@ html, body {
   background: var(--primary-700);
   transform: translateY(8px);
   box-shadow: none;
+}
+
+.plant-tree-btn {
+  background-color: #00a100;
 }
 
 /* 모달 공통 */
