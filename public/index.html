@@ -23,7 +23,7 @@
           <span id="land-owner-name"></span>님의 토지입니다.
         </div>
         <div id="tree-count-display" class="hidden">
-          <span id="tree-count-icon">🌳</span>
+          <span id="tree-count-icon">총</span>
           <span id="tree-count-number">0</span>그루
         </div>
         <button id="copy-link-btn" class="hidden">🔗 링크 복사</button>
@@ -42,7 +42,7 @@
       <!-- 우측: 나무 표기 개수, 계정, 설정 -->
       <div id="header-right">
         <div id="trees-per-page-wrapper" class="hidden">
-          <label for="trees-per-page-header">🌲</label>
+          <label for="trees-per-page-header">한번에 표기할 나무:</label>
           <select id="trees-per-page-header">
             <option value="1">1개</option>
             <option value="2">2개</option>
@@ -54,7 +54,7 @@
           <img id="user-avatar" src="" alt="프로필">
           <span id="user-name"></span>
         </div>
-        <button id="settings-btn" class="hidden">⚙️</button>
+        <button id="settings-btn" class="hidden">설정</button>
       </div>
     </header>
 
@@ -70,8 +70,8 @@
     <!-- 로그인 화면 (비로그인 시) -->
     <div id="login-screen" class="hidden">
       <div class="login-content">
-        <h1>🎄 Giftree 🌳</h1>
-        <p>나만의 토지에 나무를 받아보세요!</p>
+        <h1>Giftree</h1>
+        <p>자신의 토지에 나무를 받아보세요</p>
         <button id="google-login-btn">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
           Google로 로그인
@@ -81,7 +81,7 @@
 
     <!-- 나무 심기 화면 (다른 사람 토지 방문 시) -->
     <div id="plant-tree-screen" class="hidden">
-      <button id="plant-tree-btn" class="big-btn">🌱 나무 심어주기</button>
+      <button id="plant-tree-btn" class="big-btn">나무 심어주기</button>
     </div>
 
     <!-- 나무 심기 모달 -->
@@ -90,7 +90,7 @@
         <h2>나무 심어주기</h2>
         <div class="form-group">
           <label for="sign-message">팻말에 적을 말:</label>
-          <textarea id="sign-message" placeholder="마음을 담은 메시지를 적어주세요..."></textarea>
+          <textarea id="sign-message" placeholder="상대방에게 전할 내용을 적어주세요.(여기 적은 말은 토지 주인에게만 표기됩니다.)"></textarea>
         </div>
         <div class="form-group">
           <label for="sign-image">이미지 첨부 (선택):</label>
