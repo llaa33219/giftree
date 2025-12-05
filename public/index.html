@@ -14,23 +14,8 @@
     
     <!-- 상단 바 -->
     <header id="header">
-      <!-- 좌측: 나무 표기 개수, 계정, 설정 -->
-      <div id="header-left">
-        <div id="trees-per-page-wrapper" class="hidden">
-          <label for="trees-per-page-header">🌲</label>
-          <select id="trees-per-page-header">
-            <option value="1">1개</option>
-            <option value="2">2개</option>
-            <option value="3">3개</option>
-            <option value="4">4개</option>
-          </select>
-        </div>
-        <div id="user-account" class="hidden">
-          <img id="user-avatar" src="" alt="프로필">
-          <span id="user-name"></span>
-        </div>
-        <button id="settings-btn" class="hidden">⚙️</button>
-      </div>
+      <!-- 좌측: 비워둡 (균형용) -->
+      <div id="header-left"></div>
 
       <!-- 중앙: 토지 소유자 이름, 나무 개수, 링크 복사, 색상 -->
       <div id="header-center">
@@ -54,8 +39,23 @@
         </div>
       </div>
 
-      <!-- 우측: 비워둘 (균형용) -->
-      <div id="header-right"></div>
+      <!-- 우측: 나무 표기 개수, 계정, 설정 -->
+      <div id="header-right">
+        <div id="trees-per-page-wrapper" class="hidden">
+          <label for="trees-per-page-header">🌲</label>
+          <select id="trees-per-page-header">
+            <option value="1">1개</option>
+            <option value="2">2개</option>
+            <option value="3">3개</option>
+            <option value="4">4개</option>
+          </select>
+        </div>
+        <div id="user-account" class="hidden">
+          <img id="user-avatar" src="" alt="프로필">
+          <span id="user-name"></span>
+        </div>
+        <button id="settings-btn" class="hidden">⚙️</button>
+      </div>
     </header>
 
     <!-- 메인 컨텐츠 영역 -->
