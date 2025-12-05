@@ -510,7 +510,7 @@ html, body {
 }
 
 .tree-sign:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) translateX(-50%);
 }
 
 .sign-owner {
@@ -628,7 +628,7 @@ html, body {
 }
 
 .plant-tree-btn {
-  background-color: #00a100;
+  background: #00a100;
 }
 
 /* 모달 공통 */
