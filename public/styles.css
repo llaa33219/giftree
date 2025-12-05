@@ -37,19 +37,33 @@ html, body {
   z-index: 100;
   padding: 15px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 헤더 컨텐츠 (가로 중앙 정렬) */
-#header-content {
+/* 헤더 좌측 */
+#header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+/* 헤더 중앙 */
+#header-center {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
+  flex: 2;
+}
+
+/* 헤더 우측 (균형용) */
+#header-right {
+  flex: 1;
 }
 
 #land-owner-display {
